@@ -86,13 +86,21 @@ if (mcp) {
 // 3. Skills -----------------------------------------------------------------
 // The tool names a skill may call must exist on the server.
 function serverToolNames() {
-	const source = readFileSync(toolDefsPath, "utf8");
-	const block = source.match(TOOL_LIST);
-	if (!block) {
+	// In the monorepo the server's list is the source of truth. In this
+	// repository the list is vendored in scripts/known-tools.json.
+	if (existsSync(toolDefsPath)) {
+		const source = readFileSync(toolDefsPath, "utf8");
+		const block = source.match(TOOL_LIST);
+		if (block) {
+			return new Set([...block[1].matchAll(/"([a-z_]+)"/g)].map((m) => m[1]));
+		}
 		fail("could not read AGENT_TOOL_NAMES from tool-defs.ts");
 		return new Set();
 	}
-	return new Set([...block[1].matchAll(/"([a-z_]+)"/g)].map((m) => m[1]));
+	const vendored = JSON.parse(
+		readFileSync(join(pluginRoot, "scripts/known-tools.json"), "utf8")
+	);
+	return new Set(vendored.tools);
 }
 
 const known = serverToolNames();

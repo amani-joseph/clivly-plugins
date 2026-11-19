@@ -9,8 +9,23 @@ Connects Claude Code to your Clivly workspace over `/mcp`, with four skills:
 
 ## Install
 
-1. Install the plugin from this folder, then start a session and sign in to Clivly when prompted.
-2. Use `/mcp` in Claude Code to check the `clivly` server is connected.
+From Claude Code:
+
+```bash
+claude plugin marketplace add amani-joseph/clivly-plugins
+claude plugin install clivly-claude@clivly
+```
+
+From Codex:
+
+```bash
+codex plugin marketplace add amani-joseph/clivly-plugins
+codex plugin add clivly-claude@clivly
+```
+
+Then sign in to Clivly when prompted.
+
+1. Use `/mcp` in Claude Code to check the `clivly` server is connected.
 
 ## What it can do
 
@@ -26,7 +41,7 @@ The skills contain no business logic; they only call the Clivly tools.
 Run the checks before every release:
 
 ```bash
-node packages/claude-plugin/scripts/validate.mjs
+node scripts/validate.mjs
 ```
 
 The script checks the manifests and marketplace files, each skill's frontmatter, that every tool a skill names exists on the server, and runs `claude plugin validate --strict`.

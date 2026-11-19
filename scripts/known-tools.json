@@ -1,0 +1,20 @@
+{
+  "source": "packages/api/src/services/capabilities/tool-defs.ts",
+  "tools": [
+    "search_contacts",
+    "get_contact",
+    "list_deals",
+    "count_by",
+    "list_tasks",
+    "recent_activity",
+    "create_note",
+    "create_task",
+    "create_contact",
+    "create_deal",
+    "update_task",
+    "update_contact",
+    "move_deal",
+    "draft_follow_up_email",
+    "ack_event"
+  ]
+}
