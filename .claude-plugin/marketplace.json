@@ -1,0 +1,18 @@
+{
+  "name": "clivly",
+  "owner": { "name": "Clivly", "url": "https://clivly.com" },
+  "metadata": {
+    "description": "Clivly plugins for Claude Code",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "clivly-claude",
+      "source": "./",
+      "description": "Find contacts, summarise deals, log follow-ups and check today's tasks in your Clivly workspace.",
+      "version": "0.1.0",
+      "category": "productivity",
+      "homepage": "https://clivly.com"
+    }
+  ]
+}

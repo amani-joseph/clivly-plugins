@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "clivly": {
+      "type": "http",
+      "url": "https://api.clivly.com/mcp"
+    }
+  }
+}

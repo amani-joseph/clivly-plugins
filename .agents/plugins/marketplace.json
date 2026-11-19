@@ -1,0 +1,11 @@
+{
+  "name": "clivly",
+  "plugins": [
+    {
+      "name": "clivly-claude",
+      "source": { "source": "local", "path": "./" },
+      "policy": { "installation": "AVAILABLE" },
+      "category": "Productivity"
+    }
+  ]
+}
