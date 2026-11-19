@@ -1,0 +1,103 @@
+{
+  "name": "clivly-claude",
+  "version": "0.2.0",
+  "description": "Work with your Clivly CRM from your AI assistant: find contacts, summarise deals, log follow-ups and check today's tasks.",
+  "author": {
+    "name": "Clivly",
+    "url": "https://clivly.com"
+  },
+  "homepage": "https://clivly.com",
+  "repository": "https://github.com/amani-joseph/clivly-plugins",
+  "license": "MIT",
+  "keywords": ["crm", "contacts", "deals", "sales", "tasks"],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Clivly",
+    "shortDescription": "Your Clivly CRM: contacts, deals and tasks",
+    "longDescription": "Ask about the contacts, companies, deals, tasks and recent activity in your Clivly workspace, and have the assistant log notes, create tasks and draft follow-up emails. You choose one workspace and the kinds of access on Clivly's consent screen; your workspace owner must turn agent access on first. Changes the workspace requires approval for wait for a person in Clivly to approve them, and you can revoke the connection at any time in Settings, Connected apps.",
+    "developerName": "Clivly",
+    "category": "Productivity",
+    "capabilities": [
+      "Search contacts",
+      "Summarise deals",
+      "List tasks",
+      "Log notes and tasks",
+      "Draft follow-up emails"
+    ],
+    "websiteURL": "https://clivly.com",
+    "supportURL": "https://clivly.com/contact",
+    "privacyPolicyURL": "https://clivly.com/legal/privacy",
+    "termsOfServiceURL": "https://clivly.com/legal/terms",
+    "defaultPrompt": [
+      "What deals are open in my Clivly pipeline?",
+      "What tasks are due today or overdue?",
+      "Look up a contact and tell me when we last spoke."
+    ],
+    "brandColor": "#E5483A",
+    "brandColorDark": "#FF6B5C",
+    "composerIcon": "./assets/icon.png",
+    "composerIconDark": "./assets/icon.png",
+    "logo": "./assets/logo.png",
+    "logoDark": "./assets/logo.png"
+  },
+  "extensions": {
+    "com.openai": {
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Find a contact",
+              "prompt": "Find the contact named Ana in Clivly and show her company and status.",
+              "tools_triggered": "search_contacts, get_contact",
+              "expected_behavior": "Returns the matching contact from the test workspace with company and lifecycle status, and asks which one when several match."
+            },
+            {
+              "description": "Summarise the pipeline",
+              "prompt": "Summarise my open deals by stage, with their total value.",
+              "tools_triggered": "list_deals",
+              "expected_behavior": "Lists open deals in the test workspace grouped by stage with values, without inventing deals."
+            },
+            {
+              "description": "Today's tasks",
+              "prompt": "What tasks are due today or overdue in Clivly?",
+              "tools_triggered": "list_tasks",
+              "expected_behavior": "Lists open tasks due today and overdue tasks, or says there are none."
+            },
+            {
+              "description": "Log a follow-up",
+              "prompt": "I just spoke to Ana about pricing. Log a note on her contact and add a task to send the proposal on Friday.",
+              "tools_triggered": "search_contacts, create_note, create_task",
+              "expected_behavior": "Creates the note and the task on the right contact, or reports that the change is waiting for approval in Clivly."
+            },
+            {
+              "description": "Recent activity",
+              "prompt": "What happened in my CRM this week?",
+              "tools_triggered": "recent_activity",
+              "expected_behavior": "Summarises recent activity in the test workspace with the records it relates to."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Deleting records is not supported",
+              "prompt": "Delete all my contacts in Clivly."
+            },
+            {
+              "description": "Sending email is not supported, only drafts",
+              "prompt": "Send an email to every contact right now."
+            },
+            {
+              "description": "No access outside the connected workspace",
+              "prompt": "Show me the deals in another company's Clivly workspace."
+            }
+          ]
+        },
+        "commerce": false,
+        "commerce_description": "This plugin does not sell products or process payments."
+      },
+      "publication": {
+        "release_notes": "First release: contacts, deals, tasks, activity, notes and follow-up drafts over OAuth."
+      }
+    }
+  }
+}

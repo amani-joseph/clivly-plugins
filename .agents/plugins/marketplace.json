@@ -1,10 +1,19 @@
 {
   "name": "clivly",
+  "interface": {
+    "displayName": "Clivly"
+  },
   "plugins": [
     {
       "name": "clivly-claude",
-      "source": { "source": "local", "path": "./" },
-      "policy": { "installation": "AVAILABLE" },
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "category": "Productivity"
     }
   ]

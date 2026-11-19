@@ -1,7 +1,7 @@
 {
   "name": "clivly-claude",
-  "version": "0.1.0",
-  "description": "Work with your Clivly workspace from Claude: find contacts, summarise deals, log follow-ups and check today's tasks. Every change waits for your approval in Clivly.",
+  "version": "0.2.0",
+  "description": "Work with your Clivly workspace from Claude: find contacts, summarise deals, log follow-ups and check today's tasks. You choose the workspace and the access it gets, and can revoke it any time.",
   "author": { "name": "Clivly" },
   "homepage": "https://clivly.com",
   "license": "MIT"
