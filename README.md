@@ -19,7 +19,7 @@ A workspace owner or admin turns agent access on in Clivly, under Settings → A
 
 ```bash
 claude plugin marketplace add amani-joseph/clivly-plugins
-claude plugin install clivly-claude@clivly
+claude plugin install clivly@clivly
 ```
 
 Then run `/mcp`, choose `clivly` and sign in.
@@ -28,13 +28,15 @@ Then run `/mcp`, choose `clivly` and sign in.
 
 ```bash
 codex plugin marketplace add amani-joseph/clivly-plugins
-codex plugin add clivly-claude@clivly
+codex plugin add clivly@clivly
 codex mcp login clivly
 ```
 
 ### Claude.ai, ChatGPT and other MCP clients
 
 Add a custom connector with the URL `https://api.clivly.com/mcp`. The client registers itself and opens Clivly's sign-in and consent screen. Nothing needs to be pasted.
+
+Installed the earlier id `clivly-claude`? Remove it first with `claude plugin uninstall clivly-claude@clivly` or `codex plugin remove clivly-claude@clivly`.
 
 ## What it can do
 
