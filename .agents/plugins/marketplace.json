@@ -5,7 +5,7 @@
   },
   "plugins": [
     {
-      "name": "clivly-claude",
+      "name": "clivly",
       "source": {
         "source": "local",
         "path": "./"
