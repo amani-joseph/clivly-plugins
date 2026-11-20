@@ -69,6 +69,53 @@ if (codexMarketplace && plugin) {
 	}
 }
 
+const known = serverToolNames();
+
+// Codex and ChatGPT read .codex-plugin/plugin.json. It must describe the same
+// plugin, point at files that exist, and carry what the directory review asks
+// for: five positive and three negative cases naming real tools.
+const codexPlugin = readJson(".codex-plugin/plugin.json");
+if (codexPlugin && plugin) {
+	for (const key of ["name", "version"]) {
+		if (codexPlugin[key] !== plugin[key]) {
+			fail(`.codex-plugin/plugin.json "${key}" differs from .claude-plugin`);
+		}
+	}
+	for (const key of ["skills", "mcpServers"]) {
+		const target = codexPlugin[key];
+		if (typeof target !== "string" || !existsSync(join(pluginRoot, target))) {
+			fail(`.codex-plugin/plugin.json "${key}" must point at an existing path`);
+		}
+	}
+	const ui = codexPlugin.interface ?? {};
+	for (const key of ["composerIcon", "composerIconDark", "logo", "logoDark"]) {
+		if (typeof ui[key] !== "string" || !existsSync(join(pluginRoot, ui[key]))) {
+			fail(`.codex-plugin/plugin.json interface.${key} must be an existing file`);
+		}
+	}
+	for (const key of [
+		"websiteURL",
+		"supportURL",
+		"privacyPolicyURL",
+		"termsOfServiceURL",
+	]) {
+		if (!String(ui[key] ?? "").startsWith("https://")) {
+			fail(`.codex-plugin/plugin.json interface.${key} must be an https URL`);
+		}
+	}
+	const cases = codexPlugin.extensions?.["com.openai"]?.review?.test_cases;
+	if ((cases?.positive?.length ?? 0) < 5 || (cases?.negative?.length ?? 0) < 3) {
+		fail("review needs at least five positive and three negative test cases");
+	}
+	for (const testCase of cases?.positive ?? []) {
+		for (const tool of String(testCase.tools_triggered ?? "").split(/,\s*/)) {
+			if (!known.has(tool)) {
+				fail(`review case "${testCase.description}" names unknown tool "${tool}"`);
+			}
+		}
+	}
+}
+
 // 2. MCP config -------------------------------------------------------------
 const mcp = readJson(".mcp.json");
 if (mcp) {
@@ -103,7 +150,6 @@ function serverToolNames() {
 	return new Set(vendored.tools);
 }
 
-const known = serverToolNames();
 const skillsDir = join(pluginRoot, "skills");
 const skillNames = existsSync(skillsDir) ? readdirSync(skillsDir) : [];
 if (skillNames.length === 0) {
